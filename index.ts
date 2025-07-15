@@ -144,11 +144,13 @@ function handleWebSocketMessage(message: any) {
         case 'notification':
             handleNotification(message.payload);
             break;
+        case "session_keepalive":
+            break;
         case 'session_reconnect':
-            console.warn("‼️ Otrzymano 'session_reconnect'. Trwa ponowne łączenie z nowym adresem...");
+            console.warn("Otrzymano 'session_reconnect'. Trwa ponowne łączenie z nowym adresem...");
             break;
         default:
-            console.log("ℹ️ Otrzymano nieobsługiwany typ wiadomości:", message.metadata.message_type, message);
+            console.log("ℹOtrzymano nieobsługiwany typ wiadomości:", message.metadata.message_type, message);
     }
 }
 

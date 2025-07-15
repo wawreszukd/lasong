@@ -1,6 +1,6 @@
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 import { giveStar, getUserStats, resetDailyGivenStars, initializeDatabase, getTopStars } from "./handledb.ts";
-
+import { Cron } from "https://deno.land/x/croner@7.0.0/mod.ts";
 await load();
 
 const BOT_USERNAME = Deno.env.get("BOT_USERNAME");
@@ -335,6 +335,27 @@ async function main() {
 
 initializeDatabase();
 
- 
+ //crons
+const scheduleMessages = [
+  { minute: 45, text: "@laczeek pozostało 15 minut do hulanki" },
+  { minute: 50, text: "@laczeek pozostało 10 minut do hulanki" },
+  { minute: 55, text: "@laczeek pozostało 5 minut do hulanki" },
+  { minute: 56, text: "@laczeek pozostało 4 minuty do hulanki" },
+  { minute: 57, text: "@laczeek pozostało 3 minuty do hulanki" },
+  { minute: 58, text: "@laczeek pozostały 2 minuty do hulanki" },
+  { minute: 59, text: "@laczeek pozostała 1 minuta do hulanki" },
+];
+
+for (const { minute, text } of scheduleMessages) {
+  Cron(`${minute} 2 * * *`, {
+    timezone: "Europe/Warsaw",
+  }, () => {
+    sendChatMessage(text)
+  });
+}
+Cron("0 0 * * *", { timezone: "Europe/Warsaw" }, () => {
+  resetDailyGivenStars()
+});
+
 
 main();

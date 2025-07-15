@@ -59,10 +59,14 @@ export function giveStar(giverUsername: string, receiverUsername: string, event:
 
         db.query("COMMIT");
         return { success: true };
-    } catch (error) {
-        db.query("ROLLBACK");
-        return { success: false, message: error.message };
-    }
+        } catch (error) {
+            try {
+                db.query("ROLLBACK");
+            } catch (rollbackError) {
+                console.warn("Rollback failed (probably not active):", rollbackError.message);
+            }
+            return { success: false, message: error || String(error) };
+        }
 }
 
 export function getUserStats(username: string) {

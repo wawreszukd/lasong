@@ -65,7 +65,7 @@ export function giveStar(giverUsername: string, receiverUsername: string, event:
             } catch (rollbackError) {
                 console.warn("Rollback failed (probably not active):", rollbackError.message);
             }
-            return { success: false, message: error || String(error) };
+            return { success: false, message: error.message || String(error) };
         }
 }
 

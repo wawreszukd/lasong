@@ -248,9 +248,9 @@ async function handleNotification(payload: any) {
                 sendChatMessage(`@${receiver} mocne ego`);
                 return;
             }
-            const starResp = giveStar(chatterLogin, receiver, event);
-            const totalStars = getUserStats(receiver)?.stars_received_total ?? 0;
-            const responseMessage = starResp.message || `@${chatterLogin} dal gwiazdke ✨ dla @${receiver} teraz @${receiver} ma ${totalStars} gwiadzkuw ✨`;
+            const starResp = await giveStar(chatterLogin, receiver, event);
+            const totalStars = await getUserStats(receiver)?.stars_received_total ?? 0;
+            const responseMessage: string = starResp.message || `@${chatterLogin} dal gwiazdke ✨ dla @${receiver} teraz @${receiver} ma ${totalStars} gwiadzkuw ✨`;
             sendChatMessage(responseMessage);
             break;
         }

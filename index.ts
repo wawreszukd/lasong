@@ -348,13 +348,11 @@ const scheduleMessages = [
 
 for (const { minute, text } of scheduleMessages) {
   
-  Deno.cron(`${minute} 2 * * *`, {
-    timezone: "Europe/Warsaw",
-  }, () => {
+  Deno.cron(`hulanki ${minute}`,`${minute} 2 * * *`, () => {
     sendChatMessage(text)
   });
 }
-Deno.cron("0 0 * * *", { timezone: "Europe/Warsaw" }, () => {
+Deno.cron('reset pulnoc',"0 0 * * *", () => {
   resetDailyGivenStars()
 });
 

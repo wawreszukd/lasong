@@ -250,7 +250,7 @@ async function handleNotification(payload: any) {
             }
             const starResp = await giveStar(chatterLogin, receiver, event);
             const totalStars = await getUserStats(receiver)?.stars_received_total ?? 0;
-            const responseMessage: string = starResp.message || `@${chatterLogin} dal gwiazdke ✨ dla @${receiver} teraz @${receiver} ma gwiazdkuw ✨`;
+            const responseMessage: string = starResp.message || `@${chatterLogin} dal gwiazdke ✨ dla @${receiver} i ma teraz ${totalStars} gwiazdkuw ✨`;
             sendChatMessage(responseMessage);
             break;
         }

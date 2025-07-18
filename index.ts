@@ -348,11 +348,11 @@ const scheduleMessages = [
 
 for (const { minute, text } of scheduleMessages) {
   
-  Deno.cron(`hulanki ${minute}`,`${minute} 2 * * *`, () => {
+  Deno.cron(`hulanki ${minute}`,`${minute} 0 * * *`, () => {
     sendChatMessage(text)
   });
 }
-Deno.cron('reset pulnoc',"0 0 * * *", () => {
+Deno.cron('reset pulnoc',"22 0 * * *", () => {
   resetDailyGivenStars()
 });
 

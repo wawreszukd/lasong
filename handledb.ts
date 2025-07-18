@@ -21,7 +21,7 @@ export function giveStar(giverUsername: string, receiverUsername: string, event:
     }
 
     let stars_available = 3;
-    if (event.badges?.some((b: any) => b.set_id === "vip")) stars_available += 1;
+
     if (event.badges?.some((b: any) => b.set_id === "subscriber")) stars_available += 2;
     if (event.badges?.some((b: any) => b.set_id === "moderator")) stars_available += 1;
     if (["g_o_w_n_o_2", "laczeek"].includes(giverUsername.toLowerCase())) {

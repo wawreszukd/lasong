@@ -10,11 +10,27 @@ export function initializeDatabase() {
             stars_given_today INTEGER DEFAULT 0,
             stars_received_total INTEGER DEFAULT 0,
             last_updated TEXT
-        );
+        );z
     `);
     console.log("Database initialized successfully.");
 }
+export function howMuchLeft(username: string, event: any) {
 
+    let stars_available = 3;
+    if (event.badges?.some((b: any) => b.set_id === "subscriber")) stars_available += 2;
+    if (event.badges?.some((b: any) => b.set_id === "moderator")) stars_available += 1;
+    if (["s_t_o_p_y_2", "laczeek"].includes(username.toLowerCase())) {
+        stars_available = Number.MAX_SAFE_INTEGER;
+    }
+
+    db.query('INSERT OR IGNORE INTO users (username) VALUES (?)', [username]);
+    const user = db.queryEntries<{ stars_given_today: number }>('SELECT stars_given_today FROM users WHERE username = ?', [username])[0];
+    const stars_given_today = user ? user.stars_given_today : 0;
+
+    const remaining_stars = stars_available - stars_given_today;
+
+    return remaining_stars;
+}
 export function giveStar(giverUsername: string, receiverUsername: string, event: any) {
     if (giverUsername.toLowerCase() === receiverUsername.toLowerCase()) {
         return { success: false, message: "Nie możesz dać gwiazdki samemu sobie." };

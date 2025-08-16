@@ -10,7 +10,7 @@ export function initializeDatabase() {
             stars_given_today INTEGER DEFAULT 0,
             stars_received_total INTEGER DEFAULT 0,
             last_updated TEXT
-        );z
+        );
     `);
     console.log("Database initialized successfully.");
 }

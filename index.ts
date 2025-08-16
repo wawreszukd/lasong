@@ -217,7 +217,7 @@ async function sendChatMessage(message: string) {
         if (error instanceof Error) {
             console.error(`❌ Krytyczny błąd podczas inicjalizacji bota: ${error.message}`);
         } else {
-            // Handle cases where the error is not an instance of the Error class
+
             console.error(`❌ Krytyczny błąd podczas inicjalizacji bota: ${error}`);
         }
     }
@@ -282,7 +282,7 @@ async function handleNotification(payload: any) {
         case '!ilezostalo': {
             try{
                 const starsLeft = howMuchLeft(chatterLogin, event);
-                sendChatMessage(`pozostalo ci ${starsLeft} gwiazdkuw do rozdania dzisiaj`);
+                sendChatMessage(`@${chatterLogin}pozostalo ci ${starsLeft} gwiazdkuw do rozdania dzisiaj`);
             } catch (error) {
                 console.log(error);
                 sendChatMessage('coś się rozkurwiło');

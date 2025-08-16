@@ -1,5 +1,5 @@
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
-import { giveStar, getUserStats, resetDailyGivenStars, initializeDatabase, getTopStars } from "./handledb.ts";
+import { giveStar, getUserStats, resetDailyGivenStars, initializeDatabase, getTopStars, howMuchLeft } from "./handledb.ts";
 
 await load();
 
@@ -234,7 +234,7 @@ async function handleNotification(payload: any) {
 
     console.log(`[${event.broadcaster_user_login}] <${chatterLogin}>: ${event.message.text}`);
     
-    const MODS_AND_VIPS = ["g_o_w_n_o_2", "laczeek", "sabina_bean", "kaczmax"];
+    const MODS_AND_VIPS = ["s_t_o_p_y_2", "laczeek", "sabina_bean", "kaczmax"];
     const isModOrVip = MODS_AND_VIPS.includes(chatterLogin) || event.badges.some((badge: any) => badge.set_id === 'moderator');
 
     switch (command) {
@@ -276,6 +276,32 @@ async function handleNotification(payload: any) {
             } catch (error) {
                 console.log(error);
                 sendChatMessage('coś się rozkurwiło');
+            }
+            break;
+        }
+        case '!ilezostalo': {
+            try{
+                const starsLeft = howMuchLeft(chatterLogin, event);
+                sendChatMessage(`pozostalo ci ${starsLeft} gwiazdkuw do rozdania dzisiaj`);
+            } catch (error) {
+                console.log(error);
+                sendChatMessage('coś się rozkurwiło');
+            }
+            break;
+        }
+        case '!resetgwiazdkuw':{
+            try{
+                if(isModOrVip){
+                    resetDailyGivenStars()
+                    sendChatMessage('zrifreszowane')
+                }
+                else{
+                    sendChatMessage('a ci sie role nie pojebaly?')
+                }
+
+            } catch (error) {
+                console.log(error);
+                sendChatMessage('nie udalo sie zrifreszowac');
             }
             break;
         }

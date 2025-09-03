@@ -16,7 +16,7 @@ export function initializeDatabase() {
 }
 export function howMuchLeft(username: string, event: any) {
 
-    let stars_available = 3;
+    let stars_available = 10;
     if (event.badges?.some((b: any) => b.set_id === "subscriber")) stars_available += 2;
     if (event.badges?.some((b: any) => b.set_id === "moderator")) stars_available += 1;
     if (["s_t_o_p_y_2", "laczeek"].includes(username.toLowerCase())) {
@@ -36,7 +36,7 @@ export function giveStar(giverUsername: string, receiverUsername: string, event:
         return { success: false, message: "Nie możesz dać gwiazdki samemu sobie." };
     }
 
-    let stars_available = 3;
+    let stars_available = 10;
 
     if (event.badges?.some((b: any) => b.set_id === "subscriber")) stars_available += 2;
     if (event.badges?.some((b: any) => b.set_id === "moderator")) stars_available += 1;

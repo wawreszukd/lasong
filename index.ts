@@ -234,7 +234,7 @@ async function handleNotification(payload: any) {
 
     console.log(`[${event.broadcaster_user_login}] <${chatterLogin}>: ${event.message.text}`);
     
-    const MODS_AND_VIPS = ["s_t_o_p_y_2", "laczeek", "sabina_bean", "kaczmax"];
+    const MODS_AND_VIPS = ["ancymonek_tamburynek", "laczeek", "sabina_bean", "kaczmax"];
     const isModOrVip = MODS_AND_VIPS.includes(chatterLogin) || event.badges.some((badge: any) => badge.set_id === 'moderator');
 
     switch (command) {

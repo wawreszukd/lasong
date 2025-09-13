@@ -60,6 +60,7 @@ export async function getMusicRequester() {
 
 async function refreshToken() {
     const url = 'https://id.twitch.tv/oauth2/token';
+
     const data = new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: REFRESH_TOKEN!,

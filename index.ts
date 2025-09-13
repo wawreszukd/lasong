@@ -1,7 +1,6 @@
-import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 import { giveStar, getUserStats, resetDailyGivenStars, initializeDatabase, getTopStars, howMuchLeft } from "./handledb.ts";
 
-await load();
+
 
 const BOT_USERNAME = Deno.env.get("BOT_USERNAME");
 const CHANNEL_NAME = Deno.env.get("CHANNEL_NAME");
@@ -9,7 +8,10 @@ const REFRESH_TOKEN = Deno.env.get("REFRESH_TOKEN");
 const CLIENT_ID = Deno.env.get("CLIENT_ID");
 const CLIENT_SECRET = Deno.env.get("CLIENT_SECRET");
 const TWITCH_WEBSOCKET_URL = 'wss://eventsub.wss.twitch.tv/ws';
-
+const ADMINS = Deno.env.get("ADMINS")?.split(' ');
+if(!ADMINS){
+    throw new Error("Admins are not specified")
+}
 let botUserId: string;
 let channelUserId: string;
 let websocketSessionId: string;
@@ -34,17 +36,8 @@ if (os === "windows") {
 }
 async function updateENVAUTH(newValue: string) {
     try {
-        const envContent = await Deno.readTextFile('./.env');
-        const lines = envContent.split('\n');
-        const updatedLines = lines.map(line => {
-            if (line.startsWith(`OAUTH_TOKEN=`)) {
-                return `OAUTH_TOKEN="${newValue}"`;
-            }
-            return line;
-        });
-        const newEnvContent = updatedLines.join('\n');
-        await Deno.writeTextFile('./.env', newEnvContent);
-        console.log(`Zmienna środowiskowa "OAUTH_TOKEN" została zaktualizowana.`);
+        const text = `REFRESH_TOKEN="${newValue}}"`
+        Deno.writeTextFile("./.env", text)
     } catch (error) {
         console.error('Błąd podczas aktualizacji pliku .env:', error);
     }
@@ -234,7 +227,7 @@ async function handleNotification(payload: any) {
 
     console.log(`[${event.broadcaster_user_login}] <${chatterLogin}>: ${event.message.text}`);
     
-    const MODS_AND_VIPS = ["ancymonek_tamburynek", "laczeek", "sabina_bean", "kaczmax"];
+    const MODS_AND_VIPS = ADMINS!;
     const isModOrVip = MODS_AND_VIPS.includes(chatterLogin) || event.badges.some((badge: any) => badge.set_id === 'moderator');
 
     switch (command) {

@@ -1,7 +1,11 @@
 import { DB } from "https://deno.land/x/sqlite/mod.ts";
 
-const db = new DB('user_stars.sqlite');
+const db = new DB('/data/user_stars.sqlite');
 
+const ADMINS = Deno.env.get("ADMINS")?.split(' ');
+if(!ADMINS){
+    throw new Error("Admins are not specified")
+}
 export function initializeDatabase() {
     db.execute(`
         CREATE TABLE IF NOT EXISTS users (
@@ -19,7 +23,7 @@ export function howMuchLeft(username: string, event: any) {
     let stars_available = 10;
     if (event.badges?.some((b: any) => b.set_id === "subscriber")) stars_available += 2;
     if (event.badges?.some((b: any) => b.set_id === "moderator")) stars_available += 1;
-    if (["s_t_o_p_y_2", "laczeek"].includes(username.toLowerCase())) {
+    if (ADMINS!.includes(username.toLowerCase())) {
         stars_available = Number.MAX_SAFE_INTEGER;
     }
 
@@ -40,7 +44,7 @@ export function giveStar(giverUsername: string, receiverUsername: string, event:
 
     if (event.badges?.some((b: any) => b.set_id === "subscriber")) stars_available += 2;
     if (event.badges?.some((b: any) => b.set_id === "moderator")) stars_available += 1;
-    if (["s_t_o_p_y_2", "laczeek"].includes(giverUsername.toLowerCase())) {
+    if (ADMINS!.includes(giverUsername.toLowerCase())) {
         stars_available = Number.MAX_SAFE_INTEGER;
     }
 

@@ -305,7 +305,7 @@ async function handleNotification(payload: any) {
                 stars_received_total
                 }));
                 const data = JSON.stringify(json)
-                const filePath = new URL("/data/users.csv", import.meta.url)
+                const filePath = new URL("/data/users.json", import.meta.url)
                 Deno.writeTextFile(filePath,data);
             }else{
             console.log("not a mod")

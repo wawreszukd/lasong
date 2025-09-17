@@ -228,7 +228,7 @@ async function handleNotification(payload: any) {
     console.log(`[${event.broadcaster_user_login}] <${chatterLogin}>: ${event.message.text}`);
     
     const isModOrVip = ADMINS!.includes(chatterLogin) || event.badges.some((badge: any) => badge.set_id === 'moderator');
-
+    console.log(isModOrVip, " ",ADMINS!.includes(chatterLogin), " ",event.badges.some((badge: any) => badge.set_id === 'moderator') )
     switch (command) {
         case '!zajebiste': {
             const receiver = await getMusicRequester();

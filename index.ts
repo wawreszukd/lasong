@@ -225,11 +225,9 @@ async function handleNotification(payload: any) {
     const chatterLogin = event.chatter_user_login;
     const commandParts = messageText.split(" ");
     const command = commandParts[0];
-    console.log(ADMINS)
     console.log(`[${event.broadcaster_user_login}] <${chatterLogin}>: ${event.message.text}`);
     
-    const MODS_AND_VIPS = ADMINS!;
-    const isModOrVip = MODS_AND_VIPS.includes(chatterLogin) || event.badges.some((badge: any) => badge.set_id === 'moderator');
+    const isModOrVip = ADMINS!.includes(chatterLogin) || event.badges.some((badge: any) => badge.set_id === 'moderator');
 
     switch (command) {
         case '!zajebiste': {
@@ -302,7 +300,7 @@ async function handleNotification(payload: any) {
         case '!dumpik':{
             if(isModOrVip){
                 const content = getAll();
-                const json = content.map(([id, stars_received_total ]) => ({
+                const json = content!.map(([id, stars_received_total ]) => ({
                 id,
                 stars_received_total
                 }));

@@ -302,10 +302,9 @@ async function handleNotification(payload: any) {
         case '!dumpik':{
             if(isModOrVip){
                 const content = getAll();
-                const json = content.map(([id, name, email]) => ({
+                const json = content.map(([id, stars_received_total ]) => ({
                 id,
-                name,
-                email
+                stars_received_total
                 }));
                 const data = JSON.stringify(json)
                 Deno.writeTextFile("./data/users.csv",data);

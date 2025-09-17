@@ -228,8 +228,7 @@ async function handleNotification(payload: any) {
     console.log(`[${event.broadcaster_user_login}] <${chatterLogin}>: ${event.message.text}`);
     
     const isModOrVip = ADMINS!.includes(chatterLogin) || event.badges.some((badge: any) => badge.set_id === 'moderator');
-    console.log(isModOrVip, " ",ADMINS!.includes(chatterLogin), " ",event.badges.some((badge: any) => badge.set_id === 'moderator') )
-    switch (command) {
+     switch (command) {
         case '!zajebiste': {
             const receiver = await getMusicRequester();
             if (!receiver) {
@@ -300,8 +299,8 @@ async function handleNotification(payload: any) {
         case '!dumpik':{
             if(isModOrVip){
                 const content = getAll();
-                const json = content!.map(([id, stars_received_total ]) => ({
-                id,
+                const json = content!.map(([user, stars_received_total ]) => ({
+                user,
                 stars_received_total
                 }));
                 const data = JSON.stringify(json)

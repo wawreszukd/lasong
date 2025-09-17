@@ -307,8 +307,10 @@ async function handleNotification(payload: any) {
                 stars_received_total
                 }));
                 const data = JSON.stringify(json)
-                Deno.writeTextFile("./data/users.csv",data);
+                const filePath = new URL("data/users.csv", import.meta.url)
+                Deno.writeTextFile(filePath,data);
             }
+            console.log("not a mod")
             break;
         }
         case '!refresh': {

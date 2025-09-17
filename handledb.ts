@@ -126,6 +126,8 @@ export function getAll(){
     try{
         const records = db.query<[string, string]>("SELECT username, stars_received_total FROM users")
         return records;
+    }catch(error){
+        console.log(error)
     }
 }
 

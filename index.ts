@@ -225,7 +225,7 @@ async function handleNotification(payload: any) {
     const chatterLogin = event.chatter_user_login;
     const commandParts = messageText.split(" ");
     const command = commandParts[0];
-
+    console.log(ADMINS)
     console.log(`[${event.broadcaster_user_login}] <${chatterLogin}>: ${event.message.text}`);
     
     const MODS_AND_VIPS = ADMINS!;

@@ -1,4 +1,4 @@
-import { giveStar, getUserStats, resetDailyGivenStars, initializeDatabase, getTopStars, howMuchLeft } from "./handledb.ts";
+import { giveStar, getUserStats, resetDailyGivenStars, initializeDatabase, getTopStars, howMuchLeft, getAll } from "./handledb.ts";
 
 
 
@@ -296,6 +296,19 @@ async function handleNotification(payload: any) {
             } catch (error) {
                 console.log(error);
                 sendChatMessage('nie udalo sie zrifreszowac');
+            }
+            break;
+        }
+        case '!dumpik':{
+            if(isModOrVip){
+                const content = getAll();
+                const json = content.map(([id, name, email]) => ({
+                id,
+                name,
+                email
+                }));
+                const data = JSON.stringify(json)
+                Deno.writeTextFile("./data/users.csv",data);
             }
             break;
         }
